@@ -20,28 +20,45 @@ class Xml2Json extends Component {
   }
 
   getFileXml() {
-    let temp = document.getElementById("xml").value;
-    console.log(temp);
-    let result = convert.xml2json(temp, {compact: true, spaces: 4})
+    let textIn = document.getElementById("xml").value;
+    let result;
+    try {
+      result = convert.xml2json(textIn, {compact: true, spaces: 4})
+    } catch {
+      console.log("invalid argument");
+      document.getElementById("boxXml").innerHTML = "Xml inválido!";
+    }
+
     console.log(result);
     this.setState({file: result});
 
     this.props.handler({xmlFile: this.state.file});
-
-    document.getElementById("json").value = result;
+    if(result != null){
+      document.getElementById("boxXml").innerHTML = "";
+      document.getElementById("boxJson").innerHTML = "";
+      document.getElementById("json").value = result;
+    }  
 
   }
 
   getFileJson() {
-    let temp = document.getElementById("json").value;
-    console.log(temp);
-    let result = convert.json2xml(temp, {compact: true, ignoreComment: true, spaces: 4})
-    console.log(result);
-    this.setState({file: result});
+    let textIn = document.getElementById("json").value;
+    let result;
+    try {
+      result = convert.json2xml(textIn, {compact: true, ignoreComment: true, spaces: 4})
+    } catch {
+      console.log("invalid argument");
+      document.getElementById("boxJson").innerHTML = "Json inválido!";
+    }
 
+    this.setState({file: result});
     this.props.handler({xmlFile: this.state.file});
 
-    document.getElementById("xml").value = result;
+    if(result != null){
+      document.getElementById("boxXml").innerHTML = "";
+      document.getElementById("boxJson").innerHTML = "";
+      document.getElementById("xml").value = result;
+    }  
 
   }
 
@@ -53,6 +70,7 @@ class Xml2Json extends Component {
               <div className="control">
                 <textarea className="textarea is-info" id="xml" placeholder="XML" rows="10"></textarea>
               </div>
+              <span id="boxXml" style={{color: "red"}}></span>
           </div>
         </Column>
         <Column>
@@ -65,6 +83,7 @@ class Xml2Json extends Component {
               <div className="control">
                   <textarea className="textarea is-info" id="json" placeholder="json" rows="10"></textarea>
               </div>
+              <span id="boxJson" style={{color: "red"}}></span>
           </div>
         </Column>
         <Column>

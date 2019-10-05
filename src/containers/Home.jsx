@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Column, Columns, Container, Notification } from 'bloomer';
+import { Column, Columns, Container } from 'bloomer';
 import Xml2Json from '../components/Xml2Json';
+import Header from '../components/Header';
+import MyFooter from '../components/MyFooter';
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -16,9 +18,11 @@ class Home extends Component {
     render() {
         return (
             <Container isFluid>
-                <Container style={{marginTop: 10, fontSize: 30}}>
+                <Header />
+                
+                {/* <Container style={{marginTop: 10, fontSize: 30, marginBottom: 10}}>
                     <Notification>XML to Json</Notification>
-                </Container>
+                </Container> */}
                 <Container>
                     <Columns>
                         <Column>
@@ -27,6 +31,7 @@ class Home extends Component {
                         </Column>
                     </Columns>
                 </Container>
+                <MyFooter />
             </Container>
         );
     }
